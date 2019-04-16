@@ -96,8 +96,8 @@ class KNN:
         # Using float32 to to save memory - the default is float64
         dists = np.zeros((num_test, num_train), np.float32)
         # TODO: Implement computing all distances with no loops!
-        dicts = np.abs(self.train_X-X[:, None]).sum(axis=2)
-        return dicts
+        dists = np.abs(self.train_X-X[:, None]).sum(axis=2)
+        return dists
 
     def predict_labels_binary(self, dists):
         '''
@@ -116,7 +116,8 @@ class KNN:
         for i in range(num_test):
             # TODO: Implement choosing best class based on k
             # nearest training samples
-            pass
+            res=dists[i].argsort()[:self.k]
+            pred[i]=sum(res)/len(res)>0.5
         return pred
 
     def predict_labels_multiclass(self, dists):
